@@ -1,5 +1,5 @@
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -30,10 +30,18 @@ export class DefectReportsService {
     return this.defectReportsRepository.find();
   }
 
-  findOne(id: number) {
-    return this.defectReportsRepository.findOneBy({
+  async findOne(id: number) {
+    const report = await this.defectReportsRepository.findOneBy({
       report_id: id,
     });
+
+    if (!report) {
+      throw new NotFoundException(
+        `Defect report with ID ${id} not found`,
+      );
+    }
+
+    return report;
   }
 
   // Filter reports by status
@@ -57,14 +65,21 @@ export class DefectReportsService {
     });
   }
 
-  update(id: number, updateDefectReportDto: UpdateDefectReportDto) {
+  async update(
+    id: number,
+    updateDefectReportDto: UpdateDefectReportDto,
+  ) {
+    await this.findOne(id);
+
     return this.defectReportsRepository.update(
       id,
       updateDefectReportDto,
     );
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    await this.findOne(id);
+
     return this.defectReportsRepository.delete(id);
   }
 }

@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
+
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, QueryFailedError } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './entities/user.entity.js';
@@ -14,7 +19,29 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
+  private handleDatabaseError(error: unknown): never {
+    if (error instanceof QueryFailedError) {
+      const driverError = error.driverError as {
+        code?: string;
+      };
+
+      if (driverError.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('Email already exists');
+      }
+    }
+
+    throw error;
+  }
+
   async create(createUserDto: CreateUserDto) {
+    const existingUser = await this.usersRepository.findOneBy({
+      email: createUserDto.email,
+    });
+
+    if (existingUser) {
+      throw new ConflictException('Email already exists');
+    }
+
     const hashedPassword = await bcrypt.hash(
       createUserDto.password,
       10,
@@ -25,10 +52,14 @@ export class UsersService {
       password: hashedPassword,
     });
 
-    const savedUser = await this.usersRepository.save(user);
+    try {
+      const savedUser = await this.usersRepository.save(user);
 
-    const { password, ...safeUser } = savedUser;
-    return safeUser;
+      const { password, ...safeUser } = savedUser;
+      return safeUser;
+    } catch (error) {
+      this.handleDatabaseError(error);
+    }
   }
 
   findAll() {
@@ -42,8 +73,8 @@ export class UsersService {
     });
   }
 
-  findOne(id: number) {
-    return this.usersRepository.findOne({
+  async findOne(id: number) {
+    const user = await this.usersRepository.findOne({
       where: { user_id: id },
       select: {
         user_id: true,
@@ -52,19 +83,42 @@ export class UsersService {
         role: true,
       },
     });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
+    await this.findOne(id);
+
     const data = { ...updateUserDto };
+
+    if (data.email) {
+      const existingUser = await this.usersRepository.findOneBy({
+        email: data.email,
+      });
+
+      if (existingUser && existingUser.user_id !== id) {
+        throw new ConflictException('Email already exists');
+      }
+    }
 
     if (data.password) {
       data.password = await bcrypt.hash(data.password, 10);
     }
 
-    return this.usersRepository.update(id, data);
+    try {
+      return await this.usersRepository.update(id, data);
+    } catch (error) {
+      this.handleDatabaseError(error);
+    }
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    await this.findOne(id);
     return this.usersRepository.delete(id);
   }
 }
