@@ -1,126 +1,244 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Manufacturing Product Defect Reporting System
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Developer Information
 
-## Description
+- Name: Neilrho H. Topacio
+- Course: Bachelor of Science in Information Technology
+- Section: BSIT 4-E
+- School: Cavite State University - Imus Campus
+- Industry: Manufacturing
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Project Description
 
-## Project setup
+The Manufacturing Product Defect Reporting System is a backend application developed to help manufacturing companies record, manage, and monitor product defects.
 
-```bash
-$ npm install
-```
+The system allows authorized users to manage products, submit defect reports, and update the status of reported defects. It also provides different access permissions for administrators, staff, and inspectors.
 
-## Compile and run the project
+This project was developed as part of our academic requirements in Systems Integration and Architecture.
 
-```bash
-# development
-$ npm run start
+## Project Objectives
 
-# watch mode
-$ npm run start:dev
+- To develop a system for recording and monitoring product defects.
+- To manage user accounts and product information.
+- To provide secure login and authentication.
+- To implement role-based access control.
+- To organize defect reports based on status, severity, and product.
+- To test API endpoints using Postman.
 
-# production mode
-$ npm run start:prod
-```
+## Technologies Used
 
-## Run tests
+- NestJS - Backend framework
+- Node.js - Runtime environment
+- TypeScript - Programming language
+- MySQL - Database
+- TypeORM - Database integration
+- JWT - User authentication
+- Bcrypt - Password hashing
+- Postman - API testing
+- Git and GitHub - Version control
+- Visual Studio Code - Code editor
 
-```bash
-# unit tests
-$ npm run test
+## System Features
 
-# e2e tests
-$ npm run test:e2e
+- User authentication
+- User account management
+- Product management
+- Defect report management
+- Create, Read, Update, and Delete operations
+- Role-based access control
+- Password hashing
+- Input validation
+- Defect report filtering
+- Automatic identification of the reporting user
 
-# test coverage
-$ npm run test:cov
-```
+## User Roles
 
-## Deployment
+### Admin
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Manage user accounts.
+- Manage products.
+- View and create defect reports.
+- Update defect reports.
+- Delete defect reports.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Staff
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+- View product information.
+- Create and view defect reports.
+- Update defect report status.
+- Filter defect reports.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Inspector
 
-## Observability
+- View product information.
+- Create defect reports.
+- View individual defect reports.
+- Cannot update or delete defect reports.
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+## Database
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+The system uses MySQL as its relational database.
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+Database Name: manufacturing_defect_system
 
-This project is already instrumented. To connect it, run this and approve the code it prints at [observe.nestjs.com/link](https://observe.nestjs.com/link) - signing up for free if you have no account:
+Main Tables:
 
-```bash
-$ npx @nestjs/observe link
-```
+- users
+- products
+- defect_reports
 
-It writes the app key and secret into `.env` and makes every `nest start` script (`start`, `start:dev`, `start:debug`) load it. In production, set `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in the environment instead.
+TypeORM is used to connect the backend application to the database.
 
-Or do it by hand: create an application and an API key at [observe.nestjs.com](https://observe.nestjs.com), and set the pair as `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in the environment the app runs in.
+## System Architecture
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+The system follows a client-server architecture.
 
-## Resources
+Postman sends HTTP requests to the NestJS backend. The backend processes the requests, checks user authentication and permissions, and communicates with the MySQL database using TypeORM.
 
-Check out a few resources that may come in handy when working with NestJS:
+## Installation and Setup
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Step 1: Clone the repository
 
-## Support
+    git clone https://github.com/TopacioNeilrho-BSIT2F/manufacturing-defect-api.git
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Step 2: Open the project folder
 
-## Stay in touch
+    cd manufacturing-defect-api
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Step 3: Install dependencies
 
-## License
+    npm install
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Step 4: Configure the database
+
+Open MySQL Workbench and create the database.
+
+    CREATE DATABASE IF NOT EXISTS manufacturing_defect_system;
+
+Import the database backup if available.
+
+### Step 5: Configure environment variables
+
+Create a .env file using .env.example as a reference.
+
+    DB_HOST=localhost
+    DB_PORT=3306
+    DB_USERNAME=root
+    DB_PASSWORD=your_mysql_password
+    DB_DATABASE=manufacturing_defect_system
+    JWT_SECRET=your_secure_secret_key
+
+Replace the sample values with your own configuration.
+
+Do not upload the actual .env file to GitHub because it contains sensitive information.
+
+### Step 6: Run the application
+
+Development mode:
+
+    npm run start:dev
+
+Production build:
+
+    npm run build
+
+Production mode:
+
+    npm run start:prod
+
+## Base URL
+
+    http://localhost:3000
+
+## API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | /auth/login | User login |
+| GET | /auth/profile | View authenticated user profile |
+
+### Users
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | /users | Create a user |
+| GET | /users | View all users |
+| GET | /users/:id | View a specific user |
+| PATCH | /users/:id | Update a user |
+| DELETE | /users/:id | Delete a user |
+
+### Products
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | /products | Create a product |
+| GET | /products | View all products |
+| GET | /products/:id | View a specific product |
+| PATCH | /products/:id | Update a product |
+| DELETE | /products/:id | Delete a product |
+
+### Defect Reports
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | /defect-reports | Create a defect report |
+| GET | /defect-reports | View all defect reports |
+| GET | /defect-reports/:id | View a specific report |
+| PATCH | /defect-reports/:id | Update a report |
+| DELETE | /defect-reports/:id | Delete a report |
+| GET | /defect-reports/status/:status | Filter by status |
+| GET | /defect-reports/severity/:severity | Filter by severity |
+| GET | /defect-reports/product/:productId | Filter by product |
+
+## API Security
+
+The system uses JSON Web Token (JWT) authentication to protect API endpoints.
+
+Users must log in to receive an access token. The access token must be included as a Bearer Token when accessing protected endpoints.
+
+Bcrypt is used to hash user passwords. Role-based access control is also implemented to prevent users from performing actions outside their assigned permissions.
+
+Input validation is used to check the data submitted to the API.
+
+## API Testing
+
+Postman was used to test the API endpoints and verify the functionality of the system.
+
+The following HTTP status codes were used during testing:
+
+| Status Code | Description |
+| --- | --- |
+| 200 OK | Successful request |
+| 201 Created | Successfully created a record |
+| 400 Bad Request | Invalid input |
+| 401 Unauthorized | Missing or invalid authentication |
+| 403 Forbidden | User does not have permission |
+| 404 Not Found | Requested resource was not found |
+
+The application was also successfully built and tested locally in production mode.
+
+## System Limitations
+
+- The system is a backend prototype.
+- It does not include a graphical user interface.
+- API requests are performed using Postman.
+- The system focuses on product defect reporting and does not include inventory management.
+- The application is currently running on a local server.
+
+## Conclusion
+
+This project helped me understand how backend development, database integration, API security, and role-based access control work together.
+
+Through this project, I learned how to develop REST APIs using NestJS, connect a MySQL database using TypeORM, and test API endpoints using Postman.
+
+The system demonstrates how technology can help manufacturing companies organize and monitor product defect reports.
+
+## References
+
+- https://docs.nestjs.com/
+- https://typeorm.io/
+- https://dev.mysql.com/doc/
+- https://learning.postman.com/
