@@ -1,3 +1,4 @@
+
 import {
   Controller,
   Get,
@@ -8,6 +9,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { DefectReportsService } from './defect-reports.service.js';
@@ -42,24 +44,47 @@ export class DefectReportsController {
     return this.defectReportsService.findAll();
   }
 
+  // Filter by status
+  @Roles('admin', 'staff')
+  @Get('status/:status')
+  findByStatus(@Param('status') status: string) {
+    return this.defectReportsService.findByStatus(status);
+  }
+
+  // Filter by severity
+  @Roles('admin', 'staff')
+  @Get('severity/:severity')
+  findBySeverity(@Param('severity') severity: string) {
+    return this.defectReportsService.findBySeverity(severity);
+  }
+
+  // Filter by product ID
+  @Roles('admin', 'staff')
+  @Get('product/:productId')
+  findByProduct(
+    @Param('productId', ParseIntPipe) productId: number,
+  ) {
+    return this.defectReportsService.findByProduct(productId);
+  }
+
   @Roles('admin', 'staff', 'inspector')
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.defectReportsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.defectReportsService.findOne(id);
   }
 
   @Roles('admin', 'staff')
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateDefectReportDto: UpdateDefectReportDto,
   ) {
-    return this.defectReportsService.update(+id, updateDefectReportDto);
+    return this.defectReportsService.update(id, updateDefectReportDto);
   }
 
   @Roles('admin')
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.defectReportsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.defectReportsService.remove(id);
   }
 }

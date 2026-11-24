@@ -1,3 +1,4 @@
+
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -30,11 +31,37 @@ export class DefectReportsService {
   }
 
   findOne(id: number) {
-    return this.defectReportsRepository.findOneBy({ report_id: id });
+    return this.defectReportsRepository.findOneBy({
+      report_id: id,
+    });
+  }
+
+  // Filter reports by status
+  findByStatus(status: string) {
+    return this.defectReportsRepository.find({
+      where: { status },
+    });
+  }
+
+  // Filter reports by severity
+  findBySeverity(severity: string) {
+    return this.defectReportsRepository.find({
+      where: { severity },
+    });
+  }
+
+  // Filter reports by product ID
+  findByProduct(productId: number) {
+    return this.defectReportsRepository.find({
+      where: { product_id: productId },
+    });
   }
 
   update(id: number, updateDefectReportDto: UpdateDefectReportDto) {
-    return this.defectReportsRepository.update(id, updateDefectReportDto);
+    return this.defectReportsRepository.update(
+      id,
+      updateDefectReportDto,
+    );
   }
 
   remove(id: number) {
