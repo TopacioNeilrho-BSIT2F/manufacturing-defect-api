@@ -23,24 +23,13 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const isBcryptHash = /^\$2[aby]\$\d{2}\$/.test(user.password);
-
-    let passwordMatch = false;
-
-    if (isBcryptHash) {
-      passwordMatch = await bcrypt.compare(password, user.password);
-    } else {
-      passwordMatch = password === user.password;
-    }
+    const passwordMatch = await bcrypt.compare(
+      password,
+      user.password,
+    );
 
     if (!passwordMatch) {
       throw new UnauthorizedException('Invalid email or password');
-    }
-
-    // Automatically hash an old plain-text password
-    if (!isBcryptHash) {
-      user.password = await bcrypt.hash(password, 10);
-      await this.usersRepository.save(user);
     }
 
     const payload = {
