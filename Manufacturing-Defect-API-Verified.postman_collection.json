@@ -1,0 +1,1146 @@
+{
+  "info": {
+    "_postman_id": "8306ec29-db87-420c-8ee9-77125749ab6d",
+    "name": "Manufacturing Product Defect Reporting System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58323044",
+    "_collection_link": "https://go.postman.co/collection/58323044-8306ec29-db87-420c-8ee9-77125749ab6d?source=collection_link",
+    "description": "Manual testing collection. Select Manufacturing Local environment and configure passwords. Login as Admin before CRUD and error tests. Run each Create before its Update and Delete. For role restrictions, login as the named role first; do not run all requests unattended. Read-only GET by ID requests use existing sample records."
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login - Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {\r\n    const response = pm.response.json();\r\n\r\n    if (response.access_token) {\r\n        pm.collectionVariables.set(\"access_token\", response.access_token);\r\n        pm.environment.set(\"access_token\", response.access_token);\r\n    }\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"{{admin_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/auth/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Inspector",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {\r\n    const response = pm.response.json();\r\n\r\n    if (response.access_token) {\r\n        pm.collectionVariables.set(\"access_token\", response.access_token);\r\n        pm.environment.set(\"access_token\", response.access_token);\r\n    }\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"inspector@gmail.com\",\r\n    \"password\": \"{{inspector_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Staff",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {\r\n    const response = pm.response.json();\r\n\r\n    if (response.access_token) {\r\n        pm.collectionVariables.set(\"access_token\", response.access_token);\r\n        pm.environment.set(\"access_token\", response.access_token);\r\n    }\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"staff@gmail.com\",\r\n    \"password\": \"{{staff_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"FK Test User\",\r\n  \"email\": \"fktest@example.com\",\r\n  \"password\": \"{{test_password}}\",\r\n  \"role\": \"staff\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    if (Number.isInteger(data.user_id) && data.user_id > 0) pm.collectionVariables.set(\"test_user_id\", String(data.user_id));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.unset(\"test_user_id\");"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Updated FK Test User\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/users/{{test_user_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "{{test_user_id}}"
+              ]
+            },
+            "description": "Run Create User successfully first. Uses the ID returned by that request."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get(\"test_user_id\");",
+                  "if (!id || !/^[1-9]\\d*$/.test(String(id))) {",
+                  "    pm.execution.skipRequest();",
+                  "    throw new Error(\"Run the matching Create request first.\");",
+                  "}",
+                  "pm.variables.set(\"test_user_id\", String(id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users/{{test_user_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "{{test_user_id}}"
+              ]
+            },
+            "description": "Run Create User successfully first. Uses the ID returned by that request."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get(\"test_user_id\");",
+                  "if (!id || !/^[1-9]\\d*$/.test(String(id))) {",
+                  "    pm.execution.skipRequest();",
+                  "    throw new Error(\"Run the matching Create request first.\");",
+                  "}",
+                  "pm.variables.set(\"test_user_id\", String(id));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 204) pm.collectionVariables.unset(\"test_user_id\");"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/products/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"product_name\": \"FK Test Product\",\r\n  \"description\": \"Temporary product for CRUD retesting\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    if (Number.isInteger(data.product_id) && data.product_id > 0) pm.collectionVariables.set(\"test_product_id\", String(data.product_id));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.unset(\"test_product_id\");"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"product_name\": \"Updated FK Test Product\",\r\n  \"description\": \"Successfully updated during CRUD retesting\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/products/{{test_product_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products",
+                "{{test_product_id}}"
+              ]
+            },
+            "description": "Run Create Product successfully first. Uses the ID returned by that request."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get(\"test_product_id\");",
+                  "if (!id || !/^[1-9]\\d*$/.test(String(id))) {",
+                  "    pm.execution.skipRequest();",
+                  "    throw new Error(\"Run the matching Create request first.\");",
+                  "}",
+                  "pm.variables.set(\"test_product_id\", String(id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/products/{{test_product_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products",
+                "{{test_product_id}}"
+              ]
+            },
+            "description": "Run Create Product successfully first. Uses the ID returned by that request."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get(\"test_product_id\");",
+                  "if (!id || !/^[1-9]\\d*$/.test(String(id))) {",
+                  "    pm.execution.skipRequest();",
+                  "    throw new Error(\"Run the matching Create request first.\");",
+                  "}",
+                  "pm.variables.set(\"test_product_id\", String(id));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 204) pm.collectionVariables.unset(\"test_product_id\");"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Defect Reports",
+      "item": [
+        {
+          "name": "Get All Defect Reports",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Defect Report by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Defect Report",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"product_id\": 1,\r\n  \"defect_description\": \"Sample manufacturing defect\",\r\n  \"severity\": \"Medium\",\r\n  \"status\": \"Pending\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/defect-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    if (Number.isInteger(data.report_id) && data.report_id > 0) pm.collectionVariables.set(\"test_report_id\", String(data.report_id));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.unset(\"test_report_id\");"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Defect Report",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"Resolved\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/{{test_report_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "{{test_report_id}}"
+              ]
+            },
+            "description": "Run Create Defect Report successfully first. Uses the ID returned by that request."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get(\"test_report_id\");",
+                  "if (!id || !/^[1-9]\\d*$/.test(String(id))) {",
+                  "    pm.execution.skipRequest();",
+                  "    throw new Error(\"Run the matching Create request first.\");",
+                  "}",
+                  "pm.variables.set(\"test_report_id\", String(id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete Defect Report",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/{{test_report_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "{{test_report_id}}"
+              ]
+            },
+            "description": "Run Create Defect Report successfully first. Uses the ID returned by that request."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get(\"test_report_id\");",
+                  "if (!id || !/^[1-9]\\d*$/.test(String(id))) {",
+                  "    pm.execution.skipRequest();",
+                  "    throw new Error(\"Run the matching Create request first.\");",
+                  "}",
+                  "pm.variables.set(\"test_report_id\", String(id));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 204) pm.collectionVariables.unset(\"test_report_id\");"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Filter by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/status/Pending",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "status",
+                "Pending"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Severity",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/severity/High",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "severity",
+                "High"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/product/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "product",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Security Testing",
+      "item": [
+        {
+          "name": "Unauthorized Access Test",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid Token Test",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "invalid-token",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Access Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Inspector Access Restriction",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Staff Access Restriction",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Inspector Product Update Restriction",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"product_name\": \"Brake Disc\",\r\n    \"description\": \"Automotive brake disc\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/products/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Staff Product Update Restriction",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"product_name\": \"Brake Disc\",\r\n    \"description\": \"Automotive brake disc\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/products/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling",
+      "item": [
+        {
+          "name": "Product Not Found Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/products/999999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "products",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Not Found Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/users/999999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Defect Report Not Found Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/defect-reports/999999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid Input Test",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"product_id\": \"invalid\",\r\n    \"defect_description\": \"\",\r\n    \"severity\": \"Invalid\",\r\n    \"status\": \"Invalid\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/defect-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "defect-reports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Duplicate Email Test",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"full_name\": \"Duplicate Email Test\",\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"{{test_password}}\",\r\n    \"role\": \"staff\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid Login Credentials Test",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"WrongPassword123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "test_user_id",
+      "value": ""
+    },
+    {
+      "key": "test_product_id",
+      "value": ""
+    },
+    {
+      "key": "test_report_id",
+      "value": ""
+    }
+  ]
+}
