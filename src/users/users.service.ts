@@ -23,10 +23,20 @@ export class UsersService {
     if (error instanceof QueryFailedError) {
       const driverError = error.driverError as {
         code?: string;
+        errno?: number;
       };
 
       if (driverError.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Email already exists');
+      }
+
+      if (
+        driverError.code === 'ER_ROW_IS_REFERENCED_2' ||
+        driverError.errno === 1451
+      ) {
+        throw new ConflictException(
+          'Cannot delete user because it is referenced by existing defect reports',
+        );
       }
     }
 
@@ -85,7 +95,9 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(
+        `User with ID ${id} not found`,
+      );
     }
 
     return user;
@@ -119,6 +131,11 @@ export class UsersService {
 
   async remove(id: number) {
     await this.findOne(id);
-    return this.usersRepository.delete(id);
+
+    try {
+      return await this.usersRepository.delete(id);
+    } catch (error) {
+      this.handleDatabaseError(error);
+    }
   }
 }

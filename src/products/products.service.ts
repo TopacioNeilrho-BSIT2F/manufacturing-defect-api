@@ -1,7 +1,11 @@
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, QueryFailedError } from 'typeorm';
 
 import { Product } from './entities/product.entity.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
@@ -28,7 +32,9 @@ export class ProductsService {
     });
 
     if (!product) {
-      throw new NotFoundException(`Product with ID ${id} not found`);
+      throw new NotFoundException(
+        `Product with ID ${id} not found`,
+      );
     }
 
     return product;
@@ -36,11 +42,36 @@ export class ProductsService {
 
   async update(id: number, updateProductDto: UpdateProductDto) {
     await this.findOne(id);
-    return this.productsRepository.update(id, updateProductDto);
+
+    return this.productsRepository.update(
+      id,
+      updateProductDto,
+    );
   }
 
   async remove(id: number) {
     await this.findOne(id);
-    return this.productsRepository.delete(id);
+
+    try {
+      return await this.productsRepository.delete(id);
+    } catch (error) {
+      if (error instanceof QueryFailedError) {
+        const driverError = error.driverError as {
+          code?: string;
+          errno?: number;
+        };
+
+        if (
+          driverError.code === 'ER_ROW_IS_REFERENCED_2' ||
+          driverError.errno === 1451
+        ) {
+          throw new ConflictException(
+            'Cannot delete product because it is referenced by existing defect reports',
+          );
+        }
+      }
+
+      throw error;
+    }
   }
 }

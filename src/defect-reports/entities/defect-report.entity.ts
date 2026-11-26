@@ -1,5 +1,13 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Product } from '../../products/entities/product.entity.js';
+import { User } from '../../users/entities/user.entity.js';
 
 @Entity('defect_reports')
 export class DefectReport {
@@ -9,8 +17,22 @@ export class DefectReport {
   @Column({ name: 'product_id', type: 'int' })
   product_id!: number;
 
+  @ManyToOne(() => Product, {
+    nullable: false,
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'product_id' })
+  product!: Product;
+
   @Column({ name: 'reported_by', type: 'int' })
   reported_by!: number;
+
+  @ManyToOne(() => User, {
+    nullable: false,
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'reported_by' })
+  reporter!: User;
 
   @Column({ name: 'defect_description', type: 'text' })
   defect_description!: string;

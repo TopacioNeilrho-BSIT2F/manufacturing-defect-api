@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { DefectReport } from './entities/defect-report.entity.js';
+import { Product } from '../products/entities/product.entity.js';
+import { User } from '../users/entities/user.entity.js';
 import { CreateDefectReportDto } from './dto/create-defect-report.dto.js';
 import { UpdateDefectReportDto } from './dto/update-defect-report.dto.js';
 
@@ -14,10 +16,40 @@ export class DefectReportsService {
     private defectReportsRepository: Repository<DefectReport>,
   ) {}
 
-  create(
+  private async validateProduct(productId: number) {
+    const product = await this.defectReportsRepository.manager
+      .getRepository(Product)
+      .findOneBy({ product_id: productId });
+
+    if (!product) {
+      throw new NotFoundException(
+        `Product with ID ${productId} not found`,
+      );
+    }
+  }
+
+  private async validateReporter(userId: number) {
+    const user = await this.defectReportsRepository.manager
+      .getRepository(User)
+      .findOneBy({ user_id: userId });
+
+    if (!user) {
+      throw new NotFoundException(
+        `User with ID ${userId} not found`,
+      );
+    }
+  }
+
+  async create(
     createDefectReportDto: CreateDefectReportDto,
     reportedBy: number,
   ) {
+    await this.validateProduct(
+      createDefectReportDto.product_id,
+    );
+
+    await this.validateReporter(reportedBy);
+
     const report = this.defectReportsRepository.create({
       ...createDefectReportDto,
       reported_by: reportedBy,
@@ -70,6 +102,12 @@ export class DefectReportsService {
     updateDefectReportDto: UpdateDefectReportDto,
   ) {
     await this.findOne(id);
+
+    if (updateDefectReportDto.product_id !== undefined) {
+      await this.validateProduct(
+        updateDefectReportDto.product_id,
+      );
+    }
 
     return this.defectReportsRepository.update(
       id,
